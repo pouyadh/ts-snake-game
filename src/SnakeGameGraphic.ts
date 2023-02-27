@@ -23,7 +23,7 @@ export class SnakeGameGraphic {
   private footerElement: HTMLDivElement;
   private context: CanvasRenderingContext2D;
   private refreshInterval: number = 1000;
-  private refreshIntervalRef: number | null = null;
+  private refreshIntervalRef: NodeJS.Timer | null = null;
   private _maxCanvasSize: RectSize = { width: 300, height: 300 };
   private _scale: number = 1;
   private map: SnakeGameMap;

@@ -9,9 +9,9 @@ class SnakeGame {
   snake: Snake;
   graphic: SnakeGameGraphic;
   fruit: Fruit;
-  processIntervalRef: number | null = null;
+  processIntervalRef: NodeJS.Timer | null = null;
   processInterval: number;
-  noAutoMoveDelayRef: number;
+  noAutoMoveDelayRef: NodeJS.Timeout | null = null;
   noAutoMoveDelay: number;
   noAutoMove: boolean = false;
   constructor(rootElementId: string, width: number, height: number) {
@@ -88,7 +88,7 @@ class SnakeGame {
       clearTimeout(this.noAutoMoveDelayRef);
     }
     this.noAutoMove = true;
-    setTimeout(() => {
+    this.noAutoMoveDelayRef = setTimeout(() => {
       this.noAutoMove = false;
     }, this.noAutoMoveDelay);
   }
