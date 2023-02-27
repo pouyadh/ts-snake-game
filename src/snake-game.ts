@@ -20,7 +20,10 @@ class SnakeGame {
     this.fruit = new Fruit();
     this.snake = new Snake({ map: this.map, fruit: this.fruit });
     this.placeNewFruit();
-    const maxCanvasSize = { width: 500, height: 500 };
+    const maxCanvasSize = {
+      width: innerWidth * 0.8,
+      height: innerHeight * 0.8,
+    };
     this.graphic = new SnakeGameGraphic({
       rootElementId,
       maxCanvasSize,
@@ -34,6 +37,9 @@ class SnakeGame {
     this.process = this.process.bind(this);
   }
   private startProcess() {
+    this.graphic.showMessage(
+      "Press one of the arrow keys to start!</br></br>(&uarr;  &darr;  &larr;  &rarr;)"
+    );
     this.stopProcess();
     this.processIntervalRef = setInterval(this.process, this.processInterval);
     window.addEventListener("keydown", this.handleKeyboard);
@@ -68,6 +74,9 @@ class SnakeGame {
         this.setNoAutoMove();
         this.graphic.refresh();
         k.audio.play();
+        if (this.graphic.IsMessageVisible) {
+          this.graphic.hideMessage();
+        }
       }
     }
   }

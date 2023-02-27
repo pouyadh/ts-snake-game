@@ -199,20 +199,19 @@ export class SnakeGameGraphic {
     const e1 = ec1.translate(a);
     const e2 = ec2.translate(a);
     const isNearFruit = this.snake.head.calcDistance(this.fruit.position) <= 1;
-
     if (isNearFruit) {
       this.drawCircle({
         i: ec1.i,
         j: ec1.j,
         color: SnakeGameGraphic.snakeEyeInnerColor,
-        size: 12,
+        size: this._scale * 0.7,
       });
 
       this.drawCircle({
         i: ec2.i,
         j: ec2.j,
         color: SnakeGameGraphic.snakeEyeInnerColor,
-        size: 12,
+        size: this._scale * 0.7,
       });
       this.drawImage({ img: this.exitedImage, i: e1.i, j: e1.j, size: 10 });
       this.drawImage({ img: this.exitedImage, i: e2.i, j: e2.j, size: 10 });
@@ -221,26 +220,26 @@ export class SnakeGameGraphic {
         i: ec1.i,
         j: ec1.j,
         color: SnakeGameGraphic.snakeEyeInnerColor,
-        size: 12,
+        size: this._scale * 0.7,
       });
 
       this.drawCircle({
         i: ec2.i,
         j: ec2.j,
         color: SnakeGameGraphic.snakeEyeInnerColor,
-        size: 12,
+        size: this._scale * 0.7,
       });
       this.drawCircle({
         i: e1.i,
         j: e1.j,
         color: SnakeGameGraphic.snakeEyeColor,
-        size: 6,
+        size: this._scale * 0.4,
       });
       this.drawCircle({
         i: e2.i,
         j: e2.j,
         color: SnakeGameGraphic.snakeEyeColor,
-        size: 6,
+        size: this._scale * 0.4,
       });
     }
 
@@ -250,5 +249,15 @@ export class SnakeGameGraphic {
       j: this.fruit.position.j,
       size: this._scale - 2,
     });
+  }
+  showMessage(message: string) {
+    this.messageElement.classList.add("show");
+    this.messageElement.innerHTML = message;
+  }
+  hideMessage() {
+    this.messageElement.classList.remove("show");
+  }
+  get IsMessageVisible() {
+    return this.messageElement.classList.contains("show");
   }
 }
