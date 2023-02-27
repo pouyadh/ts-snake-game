@@ -3,6 +3,7 @@ import { Snake } from "./Snake";
 import { SnakeGameGraphic } from "./SnakeGameGraphic";
 import { SnakeGameMap } from "./SnakeGameMap";
 import { Position, Vector } from "./utils";
+import { SoundEffects } from "./SoundEffects";
 
 class SnakeGame {
   map: SnakeGameMap;
@@ -49,37 +50,24 @@ class SnakeGame {
     }
     if (this.snake.head.isEqualTo(this.fruit.position)) {
       this.placeNewFruit();
-    }
-    for (let c of this.snake.cells) {
-      if (c !== this.snake.head && c.isEqualTo(this.snake.head)) {
-        this.snake.die();
-        break;
-      }
-      if (
-        c.i < 0 ||
-        c.j < 0 ||
-        c.i >= this.map.width ||
-        c.j >= this.map.height
-      ) {
-        this.snake.die();
-        break;
-      }
+      SoundEffects.eat.play();
     }
   }
   private handleKeyboard(e: KeyboardEvent) {
-    const v = {
-      ArrowUp: Vector.UP,
-      ArrowDown: Vector.DOWN,
-      ArrowLeft: Vector.LEFT,
-      ArrowRight: Vector.RIGHT,
+    const k = {
+      ArrowUp: { v: Vector.UP, audio: SoundEffects.up },
+      ArrowDown: { v: Vector.DOWN, audio: SoundEffects.down },
+      ArrowLeft: { v: Vector.LEFT, audio: SoundEffects.left },
+      ArrowRight: { v: Vector.RIGHT, audio: SoundEffects.right },
     }[e.key];
 
-    if (v) {
-      if (!this.snake.velocity.reverse().isEqualTo(v)) {
-        this.snake.velocity = v;
+    if (k) {
+      if (!this.snake.velocity.reverse().isEqualTo(k.v)) {
+        this.snake.velocity = k.v;
         this.process();
         this.setNoAutoMove();
         this.graphic.refresh();
+        k.audio.play();
       }
     }
   }
